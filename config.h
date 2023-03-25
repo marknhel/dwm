@@ -95,12 +95,13 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_r,		spawn,          {.v = dmenucmd } },
 	{ MODKEY,			XK_x,		spawn,          {.v = termcmd } },
 
-	{ MODKEY|ShiftMask,		XK_x,		togglescratch,          {.v = 0 } },
-	{ MODKEY|ShiftMask,		XK_d,		togglescratch,          {.v = 1 } },
-	{ MODKEY|ShiftMask,		XK_c,		togglescratch,          {.v = 2 } },
+	{ MODKEY|ShiftMask,		XK_x,		togglescratch,	{.v = 0 } },
+	{ MODKEY|ShiftMask,		XK_d,		togglescratch,	{.v = 1 } },
+	{ MODKEY|ShiftMask,		XK_c,		togglescratch,	{.v = 2 } },
 
 	{ MODKEY,                       XK_b,		togglebar,      {0} },
 	{ MODKEY,                       XK_s,		togglesticky,	{0} },
+	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("togglesk") },
 	{ MODKEY,                       XK_f,		togglefullscr,	{0} },
 
 	{ MODKEY,                       XK_w,		spawn,		SHCMD("brave")  },
