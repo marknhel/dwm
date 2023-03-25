@@ -103,6 +103,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_s,		togglesticky,	{0} },
 	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("togglesk") },
 	{ MODKEY,                       XK_f,		togglefullscr,	{0} },
+	{ MODKEY,                       XK_F4,		spawn,		SHCMD("sysact") },
 
 	{ MODKEY,                       XK_w,		spawn,		SHCMD("brave")  },
 	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD("watchyt")  },
@@ -135,6 +136,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_p,		spawn,		SHCMD("passes")  },
 	{ MODKEY|ShiftMask,		XK_l,		spawn,		SHCMD("slock")  },
 	{ 0,				XK_Print,	spawn,		SHCMD("flameshot full -p ~/pics/screenshits")  },
+	{ MODKEY,			XK_Print,	spawn,		SHCMD("dmenurecord")  },
+	{ MODKEY|ShiftMask,		XK_Print,	spawn,		SHCMD("dmenurecord kill")  },
 
 	{ MODKEY,                       XK_j,		focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,		focusstack,     {.i = -1 } },
