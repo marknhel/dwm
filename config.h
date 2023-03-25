@@ -28,13 +28,13 @@ typedef struct {
 	const void *cmd;
 } Sp;
 const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {TERMINAL, "-n", "spfm", "-g", "144x41", "-e", "ranger", NULL };
-const char *spcmd3[] = {"keepassxc", NULL };
+const char *spcmd2[] = {TERMINAL, "-n", "spdic", "-g", "144x41", "-e", "dic", NULL };
+const char *spcmd3[] = {TERMINAL, "-n", "spcalc", "-g", "144x41", "-e", "bc" "-q" , NULL };
 static Sp scratchpads[] = {
-	/* name          cmd  */
-	{"spterm",      spcmd1},
-	{"spranger",    spcmd2},
-	{"keepassxc",   spcmd3},
+	/* name			cmd  */
+	{"spterm",		spcmd1},
+	{"spdic",		spcmd2},
+	{"spcalc",		spcmd3},
 };
 
 /* tagging */
@@ -50,15 +50,15 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
-	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
-	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
-	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
+	/* class	instance	title		tags mask	isfloating	isterminal	noswallow	monitor */
+	{ "Gimp",	NULL,		NULL,		0,		1,		0,		0,		-1 },
+	{ "Firefox",	NULL,		NULL,		1 << 8,		0,		0,		-1,		-1 },
+	{ "St",		NULL,		NULL,		0,		0,		1,		0,		-1 },
+	{ TERMCLASS,	NULL,		"Event Tester",	0,		0,		0,		1,		-1 }, /* xev */
 
-	{ NULL,		  "spterm",		NULL,		SPTAG(0),		1,			 -1 },
-	{ NULL,		  "spfm",		NULL,		SPTAG(1),		1,			 -1 },
-	{ NULL,		  "keepassxc",	NULL,		SPTAG(2),		0,			 -1 },
+	{ TERMCLASS,	"spterm",	NULL,		SPTAG(0),	1,		1,		0,		-1 },
+	{ TERMCLASS,	"spdic",	NULL,		SPTAG(1),	1,		1,		0,		-1 },
+	{ TERMCLASS,	"spcalc",	NULL,		SPTAG(2),	1,		1,		0,		-1 }
 };
 
 /* layout(s) */
@@ -94,14 +94,51 @@ static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_r,		spawn,          {.v = dmenucmd } },
 	{ MODKEY,			XK_x,		spawn,          {.v = termcmd } },
+
 	{ MODKEY|ShiftMask,		XK_x,		togglescratch,          {.v = 0 } },
+	{ MODKEY|ShiftMask,		XK_d,		togglescratch,          {.v = 1 } },
+	{ MODKEY|ShiftMask,		XK_c,		togglescratch,          {.v = 2 } },
+
 	{ MODKEY,                       XK_b,		togglebar,      {0} },
 	{ MODKEY,                       XK_s,		togglesticky,	{0} },
 	{ MODKEY,                       XK_f,		togglefullscr,	{0} },
+
+	{ MODKEY,                       XK_w,		spawn,		SHCMD("brave")  },
+	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD("watchyt")  },
+	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e lf ~/")  },
+	{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD(TERMINAL " -e thunar")  },
+	{ MODKEY,			XK_g,		spawn,		SHCMD("discord")  },
+	{ MODKEY,			XK_n,		spawn,		SHCMD(TERMINAL " -e sudo nmtui")  },
+	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat")  },
+	{ MODKEY,			XK_m,		spawn,		SHCMD(TERMINAL " -e ncmpcpp")  },
+	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD(TERMINAL " -e newsboat")  },
+	{ MODKEY,			XK_z,		spawn,		SHCMD(TERMINAL " -e watchv")  },
+	{ MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("qmusic")  },
+	{ MODKEY,			XK_space,	spawn,		SHCMD("sing")  },
+	{ MODKEY|ShiftMask,		XK_space,	spawn,		SHCMD("qsongs")  },
+	{ MODKEY,			XK_v,		spawn,		SHCMD("btcon")  },
+	{ MODKEY|ShiftMask,		XK_v,		spawn,		SHCMD("btdcon")  },
+	{ MODKEY,			XK_c,		spawn,		SHCMD(TERMINAL " -e camtoggle")  },
+//	{ MODKEY|ShiftMask,		XK_c,		spawn,		SHCMD("btdcon")  },
+	{ MODKEY,			XK_a,		spawn,		SHCMD(TERMINAL " -e android-file-transfer")  },
+//	{ MODKEY|ShiftMask,		XK_a,		spawn,		SHCMD("btdcon")  },
+	{ MODKEY,			XK_Up,		spawn,		SHCMD("pamixer --allow-boost -i 5")  },
+	{ MODKEY|ShiftMask,		XK_Up,		spawn,		SHCMD("xrandr -o normal")  },
+	{ MODKEY,			XK_Down,	spawn,		SHCMD("pamixer --allow-boost -d 5")  },
+	{ MODKEY|ShiftMask,		XK_Down,	spawn,		SHCMD("xrandr -o inverted")  },
+	{ MODKEY,			XK_Left,	spawn,		SHCMD("mpc prev")  },
+	{ MODKEY|ShiftMask,		XK_Left,	spawn,		SHCMD("xrandr -o left")  },
+	{ MODKEY,			XK_Right,	spawn,		SHCMD("mpc next")  },
+	{ MODKEY|ShiftMask,		XK_Right,	spawn,		SHCMD("xrandr -o right")  },
+	{ MODKEY,			XK_p,		spawn,		SHCMD("flameshot gui")  },
+	{ MODKEY|ShiftMask,		XK_p,		spawn,		SHCMD("passes")  },
+	{ MODKEY|ShiftMask,		XK_l,		spawn,		SHCMD("slock")  },
+	{ 0,				XK_Print,	spawn,		SHCMD("flameshot full -p ~/pics/screenshits")  },
+
 	{ MODKEY,                       XK_j,		focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,		focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,		incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,		incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_bracketleft,	incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_bracketright,incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,		setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,		setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return,	zoom,           {0} },
