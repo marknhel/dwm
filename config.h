@@ -100,6 +100,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_c,		togglescratch,	{.v = 2 } },
 
 	{ MODKEY,                       XK_b,		togglebar,      {0} },
+	{ MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("xdotool type $(grep -v '^#'  ~/.config/bookmarks | dmenu -i -l 10 | cut -d' ' -f1)") },
 	{ MODKEY,                       XK_s,		togglesticky,	{0} },
 	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("togglesk") },
 	{ MODKEY,                       XK_f,		togglefullscr,	{0} },
