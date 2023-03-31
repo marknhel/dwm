@@ -114,7 +114,7 @@ static const Key keys[] = {
 	{ MODKEY,			XK_n,		spawn,		SHCMD(TERMINAL " -e sudo nmtui")  },
 	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat")  },
 	{ MODKEY,			XK_m,		spawn,		SHCMD(TERMINAL " -e ncmpcpp")  },
-	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD(TERMINAL " -e newsboat")  },
+	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD(TERMINAL " -e neomutt")  },
 	{ MODKEY,			XK_z,		spawn,		SHCMD(TERMINAL " -e watchv")  },
 	{ MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("qmusic")  },
 	{ MODKEY,			XK_space,	spawn,		SHCMD("mpc toggle")  },
