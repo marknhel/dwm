@@ -2,7 +2,7 @@
 
 My fork of dwm with some additional patches.
 
-![dwm](dwm.jpeg)
+![dwm](dwm.jpg)
 
 Terminal - st
 Statusbar - slstatus
