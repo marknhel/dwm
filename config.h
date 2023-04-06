@@ -27,20 +27,24 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {TERMINAL, "-n", "spdic", "-g", "144x41", "-e", "dic", NULL };
-const char *spcmd3[] = {TERMINAL, "-n", "spcalc", "-g", "144x41", "-e", "bc" "-q" , NULL };
+const char *spcmd0[] = {TERMINAL, "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd1[] = {TERMINAL, "-n", "spdic", "-g", "144x41", "-e", "dic", NULL };
+const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "144x41", "-e", "bc", "-q" , NULL };
+const char *spcmd3[] = {TERMINAL, "-n", "splf", "-g", "144x41", "-e", "lf", "~/", NULL };
+const char *spcmd4[] = {TERMINAL, "-n", "spwatch", "-g", "120x34", "-e", "watchv", NULL };
 static Sp scratchpads[] = {
 	/* name			cmd  */
-	{"spterm",		spcmd1},
-	{"spdic",		spcmd2},
-	{"spcalc",		spcmd3},
+	{"spterm",		spcmd0},
+	{"spdic",		spcmd1},
+	{"spcalc",		spcmd2},
+	{"splf",		spcmd3},
+	{"spwatch",		spcmd4},
 };
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
+static const unsigned int ulinepad	= 7;	/* horizontal padding between the underline and tag */
 static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
 static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
 static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
@@ -53,12 +57,15 @@ static const Rule rules[] = {
 	/* class	instance	title		tags mask	isfloating	isterminal	noswallow	monitor */
 	{ "Gimp",	NULL,		NULL,		0,		1,		0,		0,		-1 },
 	{ "Firefox",	NULL,		NULL,		1 << 8,		0,		0,		-1,		-1 },
-	{ "St",		NULL,		NULL,		0,		0,		1,		0,		-1 },
-	{ TERMCLASS,	NULL,		"Event Tester",	0,		0,		0,		1,		-1 }, /* xev */
-
-	{ TERMCLASS,	"spterm",	NULL,		SPTAG(0),	1,		1,		0,		-1 },
-	{ TERMCLASS,	"spdic",	NULL,		SPTAG(1),	1,		1,		0,		-1 },
-	{ TERMCLASS,	"spcalc",	NULL,		SPTAG(2),	1,		1,		0,		-1 }
+//	{ "mpv",	NULL,		NULL,		0,		0,		0,		0,		1 },
+	{ TERMINAL,	NULL,		NULL,		0,		0,		1,		0,		-1 },
+	{ TERMINAL,	NULL,		"Event Tester",	0,		0,		0,		1,		-1 }, /* xev */
+//	Scratchpad
+	{ TERMINAL,	"spterm",	NULL,		SPTAG(0),	1,		1,		0,		-1 },
+	{ TERMINAL,	"spdic",	NULL,		SPTAG(1),	1,		1,		0,		-1 },
+	{ TERMINAL,	"spcalc",	NULL,		SPTAG(2),	1,		1,		0,		-1 },
+	{ TERMINAL,	"splf",		NULL,		SPTAG(3),	1,		1,		0,		-1 },
+	{ TERMINAL,	"spwatch",	NULL,		SPTAG(4),	1,		1,		0,		1 }
 };
 
 /* layout(s) */
@@ -98,6 +105,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_x,		togglescratch,	{.v = 0 } },
 	{ MODKEY|ShiftMask,		XK_d,		togglescratch,	{.v = 1 } },
 	{ MODKEY|ShiftMask,		XK_c,		togglescratch,	{.v = 2 } },
+	{ MODKEY|ShiftMask,		XK_e,		togglescratch,	{.v = 3 } },
+//	{ MODKEY,			XK_z,		togglescratch,	{.v = 4 } },
 
 	{ MODKEY,                       XK_b,		togglebar,      {0} },
 	{ MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("xdotool type $(grep -v '^#'  ~/.config/bookmarks | dmenu -i -l 10 | cut -d' ' -f1)") },
@@ -109,7 +118,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_w,		spawn,		SHCMD("brave")  },
 	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD("watchyt")  },
 	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e lf ~/")  },
-	{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD(TERMINAL " -e thunar")  },
+//	{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD(TERMINAL " -e thunar")  },
 	{ MODKEY,			XK_g,		spawn,		SHCMD("discord")  },
 	{ MODKEY,			XK_n,		spawn,		SHCMD(TERMINAL " -e sudo nmtui")  },
 	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat")  },
