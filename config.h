@@ -4,8 +4,8 @@
 
 
 /* appearance */
-static const unsigned int borderpx  = 0;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int snap      = 10;       /* snap pixel */
 static const int swallowfloating    = 1;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -56,7 +56,7 @@ static const Rule rules[] = {
 	 */
 	/* class	instance	title		tags mask	isfloating	isterminal	noswallow	monitor */
 	{ "Gimp",	NULL,		NULL,		0,		1,		0,		0,		-1 },
-	{ "Firefox",	NULL,		NULL,		1 << 8,		0,		0,		-1,		-1 },
+	{ "Brave",	NULL,		NULL,		1 << 1,		0,		0,		-1,		-1 },
 //	{ "mpv",	NULL,		NULL,		0,		0,		0,		0,		1 },
 	{ TERMINAL,	NULL,		NULL,		0,		0,		1,		0,		-1 },
 	{ TERMINAL,	NULL,		"Event Tester",	0,		0,		0,		1,		-1 }, /* xev */
@@ -105,7 +105,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_x,		togglescratch,	{.v = 0 } },
 	{ MODKEY|ShiftMask,		XK_d,		togglescratch,	{.v = 1 } },
 	{ MODKEY|ShiftMask,		XK_c,		togglescratch,	{.v = 2 } },
-	{ MODKEY|ShiftMask,		XK_e,		togglescratch,	{.v = 3 } },
+	{ MODKEY,			XK_e,		togglescratch,	{.v = 3 } },
 //	{ MODKEY,			XK_z,		togglescratch,	{.v = 4 } },
 
 	{ MODKEY,                       XK_b,		togglebar,      {0} },
@@ -117,8 +117,8 @@ static const Key keys[] = {
 
 	{ MODKEY,                       XK_w,		spawn,		SHCMD("brave")  },
 	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD("watchyt")  },
-	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e lf ~/")  },
-//	{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD(TERMINAL " -e thunar")  },
+//	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e lf ~/")  },
+	{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD(TERMINAL " -e thunar")  },
 	{ MODKEY,			XK_g,		spawn,		SHCMD("discord")  },
 	{ MODKEY,			XK_n,		spawn,		SHCMD(TERMINAL " -e sudo nmtui")  },
 	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat")  },
