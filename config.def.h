@@ -4,13 +4,20 @@
 
 
 /* appearance */
-static const unsigned int borderpx  = 0;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const unsigned int snap      = 10;       /* snap pixel */
+static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int swallowfloating    = 1;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
+static const int vertpad            = 10;       /* vertical padding of bar */
+static const int sidepad            = 10;       /* horizontal padding of bar */
+static const char *fonts[]          = { "MesloLGS NF:size=10" };
+static const char dmenufont[]       = "MesloLGS NF:size=10";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -27,20 +34,26 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {TERMINAL, "-n", "spterm", "-g", "120x34", NULL };
-const char *spcmd2[] = {TERMINAL, "-n", "spdic", "-g", "144x41", "-e", "dic", NULL };
-const char *spcmd3[] = {TERMINAL, "-n", "spcalc", "-g", "144x41", "-e", "bc" "-q" , NULL };
+const char *spcmd0[] = {TERMINAL, "-n", "spterm", "-g", "120x34", NULL };
+const char *spcmd1[] = {TERMINAL, "-n", "spdic", "-g", "144x41", "-e", "dic", NULL };
+const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "144x41", "-e", "bc", "-q" , NULL };
+const char *spcmd3[] = {TERMINAL, "-n", "splf", "-g", "144x41", "-e", "lf", "~/", NULL };
+const char *spcmd4[] = {TERMINAL, "-n", "spwatch", "-g", "120x34", "-e", "watchv", NULL };
+const char *spcmd5[] = {TERMINAL, "-n", "spmusic", "-g", "145x35", "-e", "ncmpcpp", NULL };
 static Sp scratchpads[] = {
 	/* name			cmd  */
-	{"spterm",		spcmd1},
-	{"spdic",		spcmd2},
-	{"spcalc",		spcmd3},
+	{"spterm",		spcmd0},
+	{"spdic",		spcmd1},
+	{"spcalc",		spcmd2},
+	{"splf",		spcmd3},
+	{"spwatch",		spcmd4},
+	{"spmusic",		spcmd5},
 };
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-static const unsigned int ulinepad	= 5;	/* horizontal padding between the underline and tag */
+static const unsigned int ulinepad	= 7;	/* horizontal padding between the underline and tag */
 static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
 static const unsigned int ulinevoffset	= 0;	/* how far above the bottom of the bar the line should appear */
 static const int ulineall 		= 0;	/* 1 to show underline on all tags, 0 for just the active ones */
@@ -52,13 +65,17 @@ static const Rule rules[] = {
 	 */
 	/* class	instance	title		tags mask	isfloating	isterminal	noswallow	monitor */
 	{ "Gimp",	NULL,		NULL,		0,		1,		0,		0,		-1 },
-	{ "Firefox",	NULL,		NULL,		1 << 8,		0,		0,		-1,		-1 },
-	{ "St",		NULL,		NULL,		0,		0,		1,		0,		-1 },
-	{ TERMCLASS,	NULL,		"Event Tester",	0,		0,		0,		1,		-1 }, /* xev */
-
-	{ TERMCLASS,	"spterm",	NULL,		SPTAG(0),	1,		1,		0,		-1 },
-	{ TERMCLASS,	"spdic",	NULL,		SPTAG(1),	1,		1,		0,		-1 },
-	{ TERMCLASS,	"spcalc",	NULL,		SPTAG(2),	1,		1,		0,		-1 }
+	{ "brave-browser",NULL,		NULL,		1 << 1,		0,		0,		-1,		-1 },
+//	{ "mpv",	NULL,		NULL,		0,		0,		0,		0,		1 },
+	{ TERMINAL,	NULL,		NULL,		0,		0,		1,		0,		-1 },
+	{ TERMINAL,	NULL,		"Event Tester",	0,		0,		0,		1,		-1 }, /* xev */
+//	Scratchpad
+	{ TERMINAL,	"spterm",	NULL,		SPTAG(0),	1,		1,		0,		-1 },
+	{ TERMINAL,	"spdic",	NULL,		SPTAG(1),	1,		1,		0,		-1 },
+	{ TERMINAL,	"spcalc",	NULL,		SPTAG(2),	1,		1,		0,		-1 },
+	{ TERMINAL,	"splf",		NULL,		SPTAG(3),	1,		1,		0,		-1 },
+	{ TERMINAL,	"spwatch",	NULL,		SPTAG(4),	1,		1,		0,		1 },
+	{ TERMINAL,	"spmusic",	NULL,		SPTAG(5),	1,		1,		0,		-1 }
 };
 
 /* layout(s) */
@@ -94,12 +111,33 @@ static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_r,		spawn,          {.v = dmenucmd } },
 	{ MODKEY,			XK_x,		spawn,          {.v = termcmd } },
-
+//	GAPS
+	{ MODKEY|Mod1Mask,              XK_h,		incrgaps,       {.i = +1 } },
+	{ MODKEY|Mod1Mask,              XK_l,		incrgaps,       {.i = -1 } },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_h,		incrogaps,      {.i = +1 } },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_l,		incrogaps,      {.i = -1 } },
+	{ MODKEY|Mod1Mask|ControlMask,  XK_h,		incrigaps,      {.i = +1 } },
+	{ MODKEY|Mod1Mask|ControlMask,  XK_l,		incrigaps,      {.i = -1 } },
+	{ MODKEY|Mod1Mask,              XK_0,		togglegaps,     {0} },
+	{ MODKEY|Mod1Mask|ShiftMask,    XK_0,		defaultgaps,    {0} },
+	{ MODKEY,                       XK_y,		incrihgaps,     {.i = +1 } },
+	{ MODKEY,                       XK_o,		incrihgaps,     {.i = -1 } },
+	{ MODKEY|ControlMask,           XK_y,		incrivgaps,     {.i = +1 } },
+	{ MODKEY|ControlMask,           XK_o,		incrivgaps,     {.i = -1 } },
+	{ MODKEY|Mod1Mask,              XK_y,		incrohgaps,     {.i = +1 } },
+	{ MODKEY|Mod1Mask,              XK_o,		incrohgaps,     {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_y,		incrovgaps,     {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_o,		incrovgaps,     {.i = -1 } },
+//	GAPS
 	{ MODKEY|ShiftMask,		XK_x,		togglescratch,	{.v = 0 } },
 	{ MODKEY|ShiftMask,		XK_d,		togglescratch,	{.v = 1 } },
 	{ MODKEY|ShiftMask,		XK_c,		togglescratch,	{.v = 2 } },
+	{ MODKEY,			XK_e,		togglescratch,	{.v = 3 } },
+//	{ MODKEY,			XK_z,		togglescratch,	{.v = 4 } },
+	{ MODKEY,			XK_m,		togglescratch,	{.v = 5 } },
 
 	{ MODKEY,                       XK_b,		togglebar,      {0} },
+	{ MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("xdotool type $(grep -v '^#'  ~/.config/bookmarks | dmenu -i -l 10 | cut -d' ' -f1)") },
 	{ MODKEY,                       XK_s,		togglesticky,	{0} },
 	{ MODKEY|ShiftMask,		XK_s,		spawn,		SHCMD("togglesk") },
 	{ MODKEY,                       XK_f,		togglefullscr,	{0} },
@@ -107,23 +145,23 @@ static const Key keys[] = {
 
 	{ MODKEY,                       XK_w,		spawn,		SHCMD("brave")  },
 	{ MODKEY|ShiftMask,		XK_w,		spawn,		SHCMD("watchyt")  },
-	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e lf ~/")  },
+//	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e lf ~/")  },
 	{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD(TERMINAL " -e thunar")  },
 	{ MODKEY,			XK_g,		spawn,		SHCMD("discord")  },
 	{ MODKEY,			XK_n,		spawn,		SHCMD(TERMINAL " -e sudo nmtui")  },
 	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat")  },
-	{ MODKEY,			XK_m,		spawn,		SHCMD(TERMINAL " -e ncmpcpp")  },
-	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD(TERMINAL " -e newsboat")  },
+//	{ MODKEY,			XK_m,		spawn,		SHCMD(TERMINAL " -e ncmpcpp")  },
+	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD(TERMINAL " -e neomutt")  },
 	{ MODKEY,			XK_z,		spawn,		SHCMD(TERMINAL " -e watchv")  },
 	{ MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("qmusic")  },
-	{ MODKEY,			XK_space,	spawn,		SHCMD("sing")  },
+	{ MODKEY,			XK_space,	spawn,		SHCMD("mpc toggle")  },
 	{ MODKEY|ShiftMask,		XK_space,	spawn,		SHCMD("qsongs")  },
 	{ MODKEY,			XK_v,		spawn,		SHCMD("btcon")  },
 	{ MODKEY|ShiftMask,		XK_v,		spawn,		SHCMD("btdcon")  },
 	{ MODKEY,			XK_c,		spawn,		SHCMD(TERMINAL " -e camtoggle")  },
 //	{ MODKEY|ShiftMask,		XK_c,		spawn,		SHCMD("btdcon")  },
 	{ MODKEY,			XK_a,		spawn,		SHCMD(TERMINAL " -e android-file-transfer")  },
-//	{ MODKEY|ShiftMask,		XK_a,		spawn,		SHCMD("btdcon")  },
+	{ MODKEY|ShiftMask,		XK_a,		spawn,		SHCMD("dla")  },
 	{ MODKEY,			XK_Up,		spawn,		SHCMD("pamixer --allow-boost -i 5")  },
 	{ MODKEY|ShiftMask,		XK_Up,		spawn,		SHCMD("xrandr -o normal")  },
 	{ MODKEY,			XK_Down,	spawn,		SHCMD("pamixer --allow-boost -d 5")  },
@@ -145,8 +183,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_bracketright,incnmaster,     {.i = -1 } },
 	{ MODKEY|ShiftMask,		XK_bracketleft,	spawn,		SHCMD("mpc prev") },
 	{ MODKEY|ShiftMask,		XK_bracketright,spawn,		SHCMD("mpc next") },
-	{ MODKEY,                       XK_h,		setmfact,       {.f = -0.05} },
-	{ MODKEY,                       XK_l,		setmfact,       {.f = +0.05} },
+	{ MODKEY,                       XK_h,		setmfact,       {.f = -0.25} },
+	{ MODKEY,                       XK_l,		setmfact,       {.f = +0.25} },
 	{ MODKEY,                       XK_Return,	zoom,           {0} },
 	{ MODKEY,                       XK_Tab,		view,           {0} },
 	{ MODKEY|ShiftMask,             XK_j,		aspectresize,   {.i = +24} },
