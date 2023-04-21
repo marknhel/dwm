@@ -9,8 +9,8 @@ static const unsigned int snap      = 10;       /* snap pixel */
 static const int swallowfloating    = 1;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
+static const char *fonts[]          = { "MesloLGS NF:size=10" };
+static const char dmenufont[]       = "MesloLGS NF:size=10";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -32,6 +32,7 @@ const char *spcmd1[] = {TERMINAL, "-n", "spdic", "-g", "144x41", "-e", "dic", NU
 const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "144x41", "-e", "bc", "-q" , NULL };
 const char *spcmd3[] = {TERMINAL, "-n", "splf", "-g", "144x41", "-e", "lf", "~/", NULL };
 const char *spcmd4[] = {TERMINAL, "-n", "spwatch", "-g", "120x34", "-e", "watchv", NULL };
+const char *spcmd5[] = {TERMINAL, "-n", "spmusic", "-g", "145x35", "-e", "ncmpcpp", NULL };
 static Sp scratchpads[] = {
 	/* name			cmd  */
 	{"spterm",		spcmd0},
@@ -39,6 +40,7 @@ static Sp scratchpads[] = {
 	{"spcalc",		spcmd2},
 	{"splf",		spcmd3},
 	{"spwatch",		spcmd4},
+	{"spmusic",		spcmd5},
 };
 
 /* tagging */
@@ -56,7 +58,7 @@ static const Rule rules[] = {
 	 */
 	/* class	instance	title		tags mask	isfloating	isterminal	noswallow	monitor */
 	{ "Gimp",	NULL,		NULL,		0,		1,		0,		0,		-1 },
-	{ "Brave",	NULL,		NULL,		1 << 1,		0,		0,		-1,		-1 },
+	{ "brave-browser",NULL,		NULL,		1 << 1,		0,		0,		-1,		-1 },
 //	{ "mpv",	NULL,		NULL,		0,		0,		0,		0,		1 },
 	{ TERMINAL,	NULL,		NULL,		0,		0,		1,		0,		-1 },
 	{ TERMINAL,	NULL,		"Event Tester",	0,		0,		0,		1,		-1 }, /* xev */
@@ -65,7 +67,8 @@ static const Rule rules[] = {
 	{ TERMINAL,	"spdic",	NULL,		SPTAG(1),	1,		1,		0,		-1 },
 	{ TERMINAL,	"spcalc",	NULL,		SPTAG(2),	1,		1,		0,		-1 },
 	{ TERMINAL,	"splf",		NULL,		SPTAG(3),	1,		1,		0,		-1 },
-	{ TERMINAL,	"spwatch",	NULL,		SPTAG(4),	1,		1,		0,		1 }
+	{ TERMINAL,	"spwatch",	NULL,		SPTAG(4),	1,		1,		0,		1 },
+	{ TERMINAL,	"spmusic",	NULL,		SPTAG(5),	1,		1,		0,		-1 }
 };
 
 /* layout(s) */
@@ -107,6 +110,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,		XK_c,		togglescratch,	{.v = 2 } },
 	{ MODKEY,			XK_e,		togglescratch,	{.v = 3 } },
 //	{ MODKEY,			XK_z,		togglescratch,	{.v = 4 } },
+	{ MODKEY,			XK_m,		togglescratch,	{.v = 5 } },
 
 	{ MODKEY,                       XK_b,		togglebar,      {0} },
 	{ MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("xdotool type $(grep -v '^#'  ~/.config/bookmarks | dmenu -i -l 10 | cut -d' ' -f1)") },
@@ -122,7 +126,7 @@ static const Key keys[] = {
 	{ MODKEY,			XK_g,		spawn,		SHCMD("discord")  },
 	{ MODKEY,			XK_n,		spawn,		SHCMD(TERMINAL " -e sudo nmtui")  },
 	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat")  },
-	{ MODKEY,			XK_m,		spawn,		SHCMD(TERMINAL " -e ncmpcpp")  },
+//	{ MODKEY,			XK_m,		spawn,		SHCMD(TERMINAL " -e ncmpcpp")  },
 	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD(TERMINAL " -e neomutt")  },
 	{ MODKEY,			XK_z,		spawn,		SHCMD(TERMINAL " -e watchv")  },
 	{ MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("qmusic")  },
