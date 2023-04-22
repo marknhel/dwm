@@ -18,6 +18,8 @@ static const int vertpad            = 5;       /* vertical padding of bar */
 static const int sidepad            = 5;       /* horizontal padding of bar */
 static const char *fonts[]          = { "MesloLGS NF:size=10" };
 static const char dmenufont[]       = "MesloLGS NF:size=10";
+static unsigned int baralpha        = 0xd0;
+static unsigned int borderalpha     = OPAQUE;
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
