@@ -42,6 +42,9 @@ const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "144x41", "-e", "bc", "-
 const char *spcmd3[] = {TERMINAL, "-n", "splf", "-g", "144x41", "-e", "lf", NULL };
 const char *spcmd4[] = {TERMINAL, "-n", "spwatch", "-g", "120x34", "-e", "watchv", NULL };
 const char *spcmd5[] = {TERMINAL, "-n", "spmusic", "-g", "145x35", "-e", "ncmpcpp", NULL };
+const char *spcmd6[] = {TERMINAL, "-n", "spnmtui", "-g", "145x45", "-e","sudo", "nmtui", NULL };
+const char *spcmd7[] = {TERMINAL, "-n", "spneomutt", "-g", "145x45", "-e", "neomutt", NULL };
+const char *spcmd8[] = {TERMINAL, "-n", "spnewsboat", "-g", "145x45", "-e", "newsboat", NULL };
 static Sp scratchpads[] = {
 	/* name			cmd  */
 	{"spterm",		spcmd0},
@@ -50,6 +53,9 @@ static Sp scratchpads[] = {
 	{"splf",		spcmd3},
 	{"spwatch",		spcmd4},
 	{"spmusic",		spcmd5},
+	{"spnmtui",		spcmd6},
+	{"spneomutt",		spcmd7},
+	{"spnewsboat",		spcmd8},
 };
 
 /* tagging */
@@ -77,7 +83,10 @@ static const Rule rules[] = {
 	{ TERMINAL,	"spcalc",	NULL,		SPTAG(2),	1,		1,		0,		-1 },
 	{ TERMINAL,	"splf",		NULL,		SPTAG(3),	1,		1,		0,		-1 },
 	{ TERMINAL,	"spwatch",	NULL,		SPTAG(4),	1,		1,		0,		1 },
-	{ TERMINAL,	"spmusic",	NULL,		SPTAG(5),	1,		1,		0,		-1 }
+	{ TERMINAL,	"spmusic",	NULL,		SPTAG(5),	1,		1,		0,		-1 },
+	{ TERMINAL,	"spnmtui",	NULL,		SPTAG(6),	1,		1,		0,		-1 },
+	{ TERMINAL,	"spneomutt",	NULL,		SPTAG(7),	1,		1,		0,		-1 },
+	{ TERMINAL,	"spnewsboat",	NULL,		SPTAG(8),	1,		1,		0,		-1 }
 };
 
 /* layout(s) */
@@ -137,6 +146,9 @@ static const Key keys[] = {
 	{ MODKEY,			XK_e,		togglescratch,	{.v = 3 } },
 //	{ MODKEY,			XK_z,		togglescratch,	{.v = 4 } },
 	{ MODKEY,			XK_m,		togglescratch,	{.v = 5 } },
+	{ MODKEY,			XK_n,		togglescratch,	{.v = 6 }  },
+	{ MODKEY|ShiftMask,		XK_m,		togglescratch,	{.v = 7 }  },
+	{ MODKEY|ShiftMask,		XK_n,		togglescratch,	{.v = 8 }  },
 
 	{ MODKEY,                       XK_b,		togglebar,      {0} },
 	{ MODKEY|ShiftMask,		XK_b,		spawn,		SHCMD("xdotool type $(grep -v '^#'  ~/.config/bookmarks | dmenu -i -l 10 | cut -d' ' -f1)") },
@@ -150,10 +162,10 @@ static const Key keys[] = {
 //	{ MODKEY,			XK_e,		spawn,		SHCMD(TERMINAL " -e lf ~/")  },
 	{ MODKEY|ShiftMask,		XK_e,		spawn,		SHCMD(TERMINAL " -e thunar")  },
 	{ MODKEY,			XK_g,		spawn,		SHCMD("discord")  },
-	{ MODKEY,			XK_n,		spawn,		SHCMD(TERMINAL " -e sudo nmtui")  },
-	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat")  },
+//	{ MODKEY,			XK_n,		spawn,		SHCMD(TERMINAL " -e sudo nmtui")  },
+//	{ MODKEY|ShiftMask,		XK_n,		spawn,		SHCMD(TERMINAL " -e newsboat")  },
 //	{ MODKEY,			XK_m,		spawn,		SHCMD(TERMINAL " -e ncmpcpp")  },
-	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD(TERMINAL " -e neomutt")  },
+//	{ MODKEY|ShiftMask,		XK_m,		spawn,		SHCMD(TERMINAL " -e neomutt")  },
 	{ MODKEY,			XK_z,		spawn,		SHCMD(TERMINAL " -e watchv")  },
 	{ MODKEY|ShiftMask,		XK_z,		spawn,		SHCMD("qmusic")  },
 	{ MODKEY,			XK_space,	spawn,		SHCMD("mpc toggle")  },
