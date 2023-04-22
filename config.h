@@ -4,7 +4,7 @@
 
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 5;       /* snap pixel */
 static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
@@ -37,7 +37,7 @@ typedef struct {
 const char *spcmd0[] = {TERMINAL, "-n", "spterm", "-g", "120x34", NULL };
 const char *spcmd1[] = {TERMINAL, "-n", "spdic", "-g", "144x41", "-e", "dic", NULL };
 const char *spcmd2[] = {TERMINAL, "-n", "spcalc", "-g", "144x41", "-e", "bc", "-q" , NULL };
-const char *spcmd3[] = {TERMINAL, "-n", "splf", "-g", "144x41", "-e", "lf", "~/", NULL };
+const char *spcmd3[] = {TERMINAL, "-n", "splf", "-g", "144x41", "-e", "lf", NULL };
 const char *spcmd4[] = {TERMINAL, "-n", "spwatch", "-g", "120x34", "-e", "watchv", NULL };
 const char *spcmd5[] = {TERMINAL, "-n", "spmusic", "-g", "145x35", "-e", "ncmpcpp", NULL };
 static Sp scratchpads[] = {
