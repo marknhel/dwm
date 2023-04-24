@@ -14,7 +14,7 @@ static const int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int swallowfloating    = 1;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const int vertpad            = 5;       /* vertical padding of bar */
+static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
 static const char *fonts[]          = { "MesloLGS NF:size=10" };
 static const char dmenufont[]       = "MesloLGS NF:size=10";
@@ -45,6 +45,7 @@ const char *spcmd5[] = {TERMINAL, "-n", "spmusic", "-g", "145x35", "-e", "ncmpcp
 const char *spcmd6[] = {TERMINAL, "-n", "spnmtui", "-g", "145x45", "-e","sudo", "nmtui", NULL };
 const char *spcmd7[] = {TERMINAL, "-n", "spneomutt", "-g", "145x45", "-e", "neomutt", NULL };
 const char *spcmd8[] = {TERMINAL, "-n", "spnewsboat", "-g", "145x45", "-e", "newsboat", NULL };
+
 static Sp scratchpads[] = {
 	/* name			cmd  */
 	{"spterm",		spcmd0},
@@ -139,7 +140,7 @@ static const Key keys[] = {
 	{ MODKEY|Mod1Mask,              XK_o,		incrohgaps,     {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_y,		incrovgaps,     {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_o,		incrovgaps,     {.i = -1 } },
-//	GAPS
+//	Scratchpads
 	{ MODKEY|ShiftMask,		XK_x,		togglescratch,	{.v = 0 } },
 	{ MODKEY|ShiftMask,		XK_d,		togglescratch,	{.v = 1 } },
 	{ MODKEY|ShiftMask,		XK_c,		togglescratch,	{.v = 2 } },
@@ -197,8 +198,8 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_bracketright,incnmaster,     {.i = -1 } },
 	{ MODKEY|ShiftMask,		XK_bracketleft,	spawn,		SHCMD("mpc prev") },
 	{ MODKEY|ShiftMask,		XK_bracketright,spawn,		SHCMD("mpc next") },
-	{ MODKEY,                       XK_h,		setmfact,       {.f = -0.25} },
-	{ MODKEY,                       XK_l,		setmfact,       {.f = +0.25} },
+	{ MODKEY,                       XK_h,		setmfact,       {.f = -0.025} },
+	{ MODKEY,                       XK_l,		setmfact,       {.f = +0.025} },
 	{ MODKEY,                       XK_Return,	zoom,           {0} },
 	{ MODKEY,                       XK_Tab,		view,           {0} },
 	{ MODKEY|ShiftMask,             XK_j,		aspectresize,   {.i = +24} },
