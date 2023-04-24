@@ -18,3 +18,6 @@ Patches
 - [bottomstack](https://dwm.suckless.org/patches/bottomstack/)
 - [sticky](https://dwm.suckless.org/patches/sticky/)
 - [tagshift](https://dwm.suckless.org/patches/tagshift/)
+- [alpha](https://dwm.suckless.org/patches/alpha/)
+- [barpadding](https://dwm.suckless.org/patches/barpadding)
+- [vanitygaps](https://dwm.suckless.org/patches/vanitygaps/)
