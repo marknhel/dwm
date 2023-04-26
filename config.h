@@ -78,7 +78,8 @@ static const Rule rules[] = {
 //	{ "mpv",	NULL,		NULL,		0,		0,		0,		0,		1 },
 	{ TERMINAL,	NULL,		NULL,		0,		0,		1,		0,		-1 },
 	{ TERMINAL,	NULL,		"Event Tester",	0,		0,		0,		1,		-1 }, /* xev */
-//	Scratchpad
+	{ "discord",	NULL,		NULL,		8 << 8,		1,		0,		1,		-1 },
+//	Scratchpads
 	{ TERMINAL,	"spterm",	NULL,		SPTAG(0),	1,		1,		0,		-1 },
 	{ TERMINAL,	"spdic",	NULL,		SPTAG(1),	1,		1,		0,		-1 },
 	{ TERMINAL,	"spcalc",	NULL,		SPTAG(2),	1,		1,		0,		-1 },
