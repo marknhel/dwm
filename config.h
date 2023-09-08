@@ -16,8 +16,8 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
-static const char *fonts[]          = { "MesloLGS NF:size=10" };
-static const char dmenufont[]       = "MesloLGS NF:size=10";
+static const char *fonts[]          = { "Iosevka Nerd Font:size=12" };
+static const char dmenufont[]       = "Iosevka Nerd Font:size=12";
 static unsigned int baralpha        = 0xd0;
 static unsigned int borderalpha     = OPAQUE;
 static const char col_gray1[]       = "#222222";
@@ -45,6 +45,7 @@ const char *spcmd5[] = {TERMINAL, "-n", "spmusic", "-g", "145x35", "-e", "ncmpcp
 const char *spcmd6[] = {TERMINAL, "-n", "spnmtui", "-g", "145x45", "-e","sudo", "nmtui", NULL };
 const char *spcmd7[] = {TERMINAL, "-n", "spneomutt", "-g", "145x45", "-e", "neomutt", NULL };
 const char *spcmd8[] = {TERMINAL, "-n", "spnewsboat", "-g", "145x45", "-e", "newsboat", NULL };
+const char *spcmd9[] = {TERMINAL, "-n", "spcode", "-g", "160x50", "-e", "code", NULL };
 
 static Sp scratchpads[] = {
 	/* name			cmd  */
@@ -57,10 +58,12 @@ static Sp scratchpads[] = {
 	{"spnmtui",		spcmd6},
 	{"spneomutt",		spcmd7},
 	{"spnewsboat",		spcmd8},
+	{"spcode",		spcmd9},
 };
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+//static const char *tags[] = { "", "", "", "", "", "", "", "", ""};
 
 static const unsigned int ulinepad	= 7;	/* horizontal padding between the underline and tag */
 static const unsigned int ulinestroke	= 2;	/* thickness / height of the underline */
@@ -88,7 +91,8 @@ static const Rule rules[] = {
 	{ TERMINAL,	"spmusic",	NULL,		SPTAG(5),	1,		1,		0,		-1 },
 	{ TERMINAL,	"spnmtui",	NULL,		SPTAG(6),	1,		1,		0,		-1 },
 	{ TERMINAL,	"spneomutt",	NULL,		SPTAG(7),	1,		1,		0,		-1 },
-	{ TERMINAL,	"spnewsboat",	NULL,		SPTAG(8),	1,		1,		0,		-1 }
+	{ TERMINAL,	"spnewsboat",	NULL,		SPTAG(8),	1,		1,		0,		-1 },
+	{ TERMINAL,	"spcode",	NULL,		SPTAG(9),	1,		1,		0,		-1 }
 };
 
 /* layout(s) */
