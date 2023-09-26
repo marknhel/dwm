@@ -83,6 +83,7 @@ static const Rule rules[] = {
 	{ TERMINAL,	NULL,		"Event Tester",	0,		0,		0,		1,		-1 }, /* xev */
 	{ "discord",	NULL,		NULL,		0,		1,		0,		1,		-1 },
 	{ "ripdrag",	NULL,		NULL,		0,		1,		0,		1,		-1 },
+	{ "watchv",	NULL,		NULL,		0,		1,		0,		0,		-1 },
 	{ TERMINAL,	NULL,		"codeblocks-term",0,		1,		0,		1,		-1 },
 //	Scratchpads
 	{ TERMINAL,	"spterm",	NULL,		SPTAG(0),	1,		1,		0,		-1 },
